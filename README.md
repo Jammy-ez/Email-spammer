@@ -1,4 +1,4 @@
-# Email-spammer
+# Email-bomber + tool
 Spams emails to a victim
 
 Please do not skid this i worked hard on it
